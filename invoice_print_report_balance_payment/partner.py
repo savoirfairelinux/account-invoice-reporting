@@ -22,6 +22,7 @@
 import datetime
 
 from openerp.osv import orm
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
 class res_partner(orm.Model):
@@ -30,8 +31,10 @@ class res_partner(orm.Model):
     def get_balance_at_date(self, cr, uid, id, date, context=None):
         query = self.pool.get('account.move.line')._query_get(
             cr, uid, context=context)
-        if isinstance(date, datetime.date):
-            date = date.strftime('%Y-%m-%d')
+        if not date:
+            date = datetime.date.today().strftime(DEFAULT_SERVER_DATE_FORMAT)
+        elif isinstance(date, datetime.date):
+            date = date.strftime(DEFAULT_SERVER_DATE_FORMAT)
         sql = """SELECT SUM(l.debit-l.credit)
                  FROM account_move_line l
                  JOIN account_move m ON (l.move_id=m.id)
