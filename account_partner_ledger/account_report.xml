@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="account_3rdparty_ledger"
+            auto="False"
+            menu="False"
+            model="res.partner"
+            name="account.third_party_ledger"
+            rml="account_partner_ledger/report/account_partner_ledger.rml"
+            string="Partner Ledger"/>
+    </data>
+</openerp>
