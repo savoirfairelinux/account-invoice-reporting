@@ -298,12 +298,8 @@ class third_party_ledger(report_sxw.rml_parse, common_report_header):
             return True
         return False
 
-report_sxw.report_sxw('report.account.third_party_ledger', 'res.partner',
-        'addons/account/report/account_partner_ledger.rml',parser=third_party_ledger,
+report_sxw.report_sxw('report.account.third_party_ledger',
+        'res.partner',
+        'addons/account_partner_ledger/report/account_partner_ledger.rml',
+        parser=third_party_ledger,
         header='internal')
-
-report_sxw.report_sxw('report.account.third_party_ledger_other', 'res.partner',
-        'addons/account/report/account_partner_ledger_other.rml',parser=third_party_ledger,
-        header='internal')
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
