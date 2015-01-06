@@ -31,10 +31,26 @@ class State(object):
         self.address = "Some address"
 
 def iter_current_lines(self, container, iterable, max_step):
+    balance = 0
+
     for i in range(max_step):
         try:
-            val = next(iterable)
-            container["total"] += val
+            value = next(iterable)
+            credit = value if i % 2 == 0 else 0
+            debit = value if (i+1) % 2 == 0 else 0
+
+            balance += debit - credit
+
+            val = {
+                "payments": credit,
+                "charges": debit,
+                "date": "10-17-12",
+                "ref": "00011336",
+                "description": "Abcdef (ABC) abcdef abcdefg df Traghpert fg",
+                "balance": balance
+            }
+
+            container["total"] += balance
             container["lines"].append(val)
         except StopIteration:
             container["not_last"] = False
@@ -42,6 +58,7 @@ def iter_current_lines(self, container, iterable, max_step):
 
 def PageIterator(obj):
     state = State(obj)
+    counter = 1
 
     while True:
         if not state.previous:
@@ -50,12 +67,17 @@ def PageIterator(obj):
             last_total = state.previous["total"]
 
         current = {
+            "index": counter,
+            "period_start": "01-10-13",
+            "period_end": "19-23-14",
             "address": state.address,
             "previous": last_total,
             "total": last_total,
             "not_last": True,
             "lines": []
         }
+
+        counter += 1
 
         iter_current_lines(state, current, state.iterator, 5)
 

@@ -20,6 +20,7 @@
         <images/>
 
         <paraStyle name="base" fontName="Helvetica" fontSize="10" />
+        <paraStyle name="AmountRight" parent="base" alignment="RIGHT"/>
         <paraStyle name="baseBig" parent="base" fontSize="12" />
         <paraStyle name="HCenter" parent="baseBig" alignment="CENTER" />
         <paraStyle name="RightHeader" parent="baseBig" alignment="RIGHT" />
@@ -52,7 +53,7 @@
 
             <spacer length="20mm" />
 
-            <blockTable colWidths="32mm,32mm,32mm,32mm,32mm,32mm">
+            <blockTable colWidths="22mm,25mm,70mm,25mm,25mm,25mm">
                 <tr>
                     <td><para style="HCenter">DATE</para></td>
                     <td><para style="HCenter">REF. NO.</para></td>
@@ -63,12 +64,12 @@
                 </tr>
                 <tr>
                     [[repeatIn(page['lines'], 'line')]]
-                    <td>[[ line['date'] ]]</td>
-                    <td>[[ line['ref'] ]]</td>
-                    <td>[[ line['description'] ]]</td>
-                    <td>[[ line['charges'] ]]</td>
-                    <td>[[ line['payments'] ]]</td>
-                    <td>[[ line['balance'] ]]</td>
+                    <td><para>[[ line['date'] ]]</para></td>
+                    <td><para>[[ line['ref'] ]]</para></td>
+                    <td><para>[[ line['description'] ]]</para></td>
+                    <td><para style="AmountRight">[[ line['charges'] ]]</para></td>
+                    <td><para style="AmountRight">[[ line['payments'] ]]</para></td>
+                    <td><para style="AmountRight">[[ line['balance'] ]]</para></td>
                 </tr>
             </blockTable>
 
