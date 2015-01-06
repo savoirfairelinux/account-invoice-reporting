@@ -16,11 +16,15 @@
         <initialize>
             <paraStyle name="all" alignment="justify"/>
         </initialize>
+
         <images/>
 
         <paraStyle name="base" fontName="Helvetica" fontSize="10" />
-        <paraStyle name="baseBig" fontSize="12" />
-        <paraStyle name="Statement" parent="baseBig" alignment="RIGHT" />
+        <paraStyle name="baseBig" parent="base" fontSize="12" />
+        <paraStyle name="HCenter" parent="baseBig" alignment="CENTER" />
+        <paraStyle name="RightHeader" parent="baseBig" alignment="RIGHT" />
+        <paraStyle name="Statement" parent="baseBig" alignment="RIGHT" fontSize="14"/>
+
     </stylesheet>
 
     <story>
@@ -29,42 +33,61 @@
 
             <para style="Statement">STATEMENT</para>
 
-            <blockTable colWidths="96,96,96,96">
+            <blockTable colWidths="196mm" rowHeights="30mm">
                 <tr>
-                    <td>Page [[ page['total'] ]]</td>
-                    <td>Activity From: [[ page['total'] ]]</td>
-                    <td>To: [[ page['total'] ]]</td>
+                    <td>[[ page['address'] ]]</td>
+                </tr>
+            </blockTable>
+
+            <spacer length="20mm" />
+
+            <blockTable colWidths="49mm,49mm,49mm,49mm">
+                <tr>
+                    <td>Page [[ page['index'] ]]</td>
+                    <td>Activity From: [[ page['period_start'] ]]</td>
+                    <td>To: [[ page['period_end'] ]]</td>
                     <td>Balance Forward: [[ page['previous'] ]]</td>
                 </tr>
             </blockTable>
 
-            <blockTable colWidths="50,50,50,50,50,50">
+            <spacer length="20mm" />
+
+            <blockTable colWidths="32mm,32mm,32mm,32mm,32mm,32mm">
                 <tr>
-                    <td>DATE</td>
-                    <td>REF. NO.</td>
-                    <td>DESCRIPTION</td>
-                    <td>CHARGES</td>
-                    <td>PAYMENTS</td>
-                    <td>BALANCE</td>
+                    <td><para style="HCenter">DATE</para></td>
+                    <td><para style="HCenter">REF. NO.</para></td>
+                    <td><para style="HCenter">DESCRIPTION</para></td>
+                    <td><para style="RightHeader">CHARGES</para></td>
+                    <td><para style="RightHeader">PAYMENTS</para></td>
+                    <td><para style="RightHeader">BALANCE</para></td>
                 </tr>
                 <tr>
                     [[repeatIn(page['lines'], 'line')]]
-                    <td></td>
-                    <td>[[ line ]]</td>
-                    <td>[[ page["total"] ]]</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>[[ line['date'] ]]</td>
+                    <td>[[ line['ref'] ]]</td>
+                    <td>[[ line['description'] ]]</td>
+                    <td>[[ line['charges'] ]]</td>
+                    <td>[[ line['payments'] ]]</td>
+                    <td>[[ line['balance'] ]]</td>
                 </tr>
             </blockTable>
 
-            <blockTable colWidths="50,50,50,50,50">
+            <spacer length="20mm" />
+
+            <blockTable colWidths="39.2mm,39.2mm,39.2mm,39.2mm,39.2mm">
                 <tr>
-                    <td>CURRENT</td>
-                    <td>Nov</td>
-                    <td>Oct</td>
-                    <td>Pre-Oct</td>
-                    <td>AMOUNT DUE</td>
+                    <td><para style="HCenter">CURRENT</para></td>
+                    <td><para style="HCenter">Nov</para></td>
+                    <td><para style="HCenter">Oct</para></td>
+                    <td><para style="HCenter">Pre-Oct</para></td>
+                    <td><para style="HCenter">AMOUNT DUE</para></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </blockTable>
 
