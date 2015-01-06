@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<document filename="Partner Ledger.pdf">
+
+    <template
+        title="Partner Ledger"
+        author="OpenERP S.A.(sales@openerp.com)"
+        pageSize="(216mm,279mm)"
+        allowSplitting="1"
+        >
+        <pageTemplate id="first">
+            <frame id="first" x1="10" y1="10" width="196mm" height="269mm"/>
+        </pageTemplate>
+    </template>
+
+    <stylesheet>
+        <initialize>
+            <paraStyle name="all" alignment="justify"/>
+        </initialize>
+        <images/>
+
+        <paraStyle name="base" fontName="Helvetica" fontSize="10" />
+        <paraStyle name="baseBig" fontSize="12" />
+        <paraStyle name="Statement" parent="baseBig" alignment="RIGHT" />
+    </stylesheet>
+
+    <story>
+        <section>
+            [[repeatIn(get_pages(3), 'page')]]
+
+            <para style="Statement">STATEMENT</para>
+
+            <blockTable colWidths="96,96,96,96">
+                <tr>
+                    <td>Page [[ page['total'] ]]</td>
+                    <td>Activity From: [[ page['total'] ]]</td>
+                    <td>To: [[ page['total'] ]]</td>
+                    <td>Balance Forward: [[ page['previous'] ]]</td>
+                </tr>
+            </blockTable>
+
+            <blockTable colWidths="50,50,50,50,50,50">
+                <tr>
+                    <td>DATE</td>
+                    <td>REF. NO.</td>
+                    <td>DESCRIPTION</td>
+                    <td>CHARGES</td>
+                    <td>PAYMENTS</td>
+                    <td>BALANCE</td>
+                </tr>
+                <tr>
+                    [[repeatIn(page['lines'], 'line')]]
+                    <td></td>
+                    <td>[[ line ]]</td>
+                    <td>[[ page["total"] ]]</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </blockTable>
+
+            <blockTable colWidths="50,50,50,50,50">
+                <tr>
+                    <td>CURRENT</td>
+                    <td>Nov</td>
+                    <td>Oct</td>
+                    <td>Pre-Oct</td>
+                    <td>AMOUNT DUE</td>
+                </tr>
+            </blockTable>
+
+            <nextPage>
+                [[ page["not_last"] or removeParentNode('nextPage')]]
+            </nextPage>
+
+        </section>
+
+    </story>
+</document>
