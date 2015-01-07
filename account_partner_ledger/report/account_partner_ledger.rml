@@ -8,7 +8,7 @@
         allowSplitting="1"
         >
         <pageTemplate id="first">
-            <frame id="first" x1="10" y1="10" width="196mm" height="269mm"/>
+            <frame id="first" x1="15mm" y1="15mm" width="186mm" height="249mm"/>
         </pageTemplate>
     </template>
 
@@ -19,18 +19,41 @@
 
         <images/>
 
-        <paraStyle name="base" fontName="Helvetica" fontSize="10" />
-        <paraStyle name="AmountRight" parent="base" alignment="RIGHT"/>
+        <paraStyle name="base" fontName="Helvetica" fontSize="8" />
+
+        <paraStyle name="NormalRight" parent="base" alignment="RIGHT"/>
+        <paraStyle name="NormalLeft" parent="base" alignment="LEFT"/>
+
         <paraStyle name="baseBig" parent="base" fontSize="12" />
+
         <paraStyle name="HCenter" parent="baseBig" alignment="CENTER" />
         <paraStyle name="RightHeader" parent="baseBig" alignment="RIGHT" />
         <paraStyle name="Statement" parent="baseBig" alignment="RIGHT" fontSize="14"/>
 
+        <blockTableStyle id="Container"> 
+            <blockValign value="TOP" start="0,0" stop="-1,-1" />
+            <blockBackground colorName="0x00FF00" start="0,0" stop="-1,-1"/>
+            <blockLeftPadding   length="0mm" start="0,0" stop="-1,-1" />
+            <blockRightPadding  length="0mm" start="0,0" stop="-1,-1" />
+            <blockTopPadding    length="0mm" start="0,0" stop="-1,-1" />
+            <blockBottomPadding length="0mm" start="0,0" stop="-1,-1" />
+        </blockTableStyle>
+
+        <blockTableStyle id="Lines"> 
+            <blockValign value="TOP" start="0,0" stop="-1,-1" />
+            <blockBackground colorName="0xD0D0D0" start="0,0" stop="-1,-1"/>
+            <blockLeftPadding   length="0.5mm" start="0,0" stop="-1,-1" />
+            <blockRightPadding  length="0.5mm" start="0,0" stop="-1,-1" />
+            <blockTopPadding    length="0.5mm" start="0,0" stop="-1,-1" />
+            <blockBottomPadding length="0.5mm" start="0,0" stop="-1,-1" />
+        </blockTableStyle>
+
     </stylesheet>
 
     <story>
+
         <section>
-            [[repeatIn(get_pages(3), 'page')]]
+            [[repeatIn(get_pages(objects, 3), 'page')]]
 
             <section>
                 <para>
@@ -41,26 +64,37 @@
 
             <para style="Statement">STATEMENT</para>
 
-            <blockTable colWidths="196mm" rowHeights="30mm">
+            <spacer length="10mm" />
+
+            <blockTable colWidths="156mm,30mm" rowHeights="15mm" style="Lines">
+                <tr>
+                    <td><para style="NormalRight">Date:</para></td>
+                    <td><para style="NormalRight">[[ get_today_date() ]]</para></td>
+                </tr>
+            </blockTable>
+
+            <blockTable colWidths="186mm" rowHeights="20mm" style="Lines">
                 <tr>
                     <td>[[ page['address'] ]]</td>
                 </tr>
             </blockTable>
 
-            <spacer length="20mm" />
+            <spacer length="10mm" />
 
-            <blockTable colWidths="49mm,49mm,49mm,49mm">
+            <blockTable colWidths="47mm,46mm,46mm,47mm" rowHeights="5mm" style="Lines">
                 <tr>
                     <td>Page [[ page['index'] ]]</td>
-                    <td>Activity From: [[ page['period_start'] ]]</td>
-                    <td>To: [[ page['period_end'] ]]</td>
+                    <!-- <td>Activity From: [[ page['period_start'] ]]</td> -->
+                    <td>Activity From: [[ get_start_period(data) ]]</td> -->
+                    <!-- <td>To: [[ page['period_end'] ]]</td> -->
+                    <td>To: [[ get_end_period(data) ]]</td>
                     <td>Balance Forward: [[ page['previous'] ]]</td>
                 </tr>
             </blockTable>
 
-            <spacer length="20mm" />
+            <spacer length="5mm" />
 
-            <blockTable colWidths="22mm,25mm,70mm,25mm,25mm,25mm">
+            <blockTable colWidths="18mm,20mm,73mm,25mm,25mm,25mm" style="Lines">
                 <tr>
                     <td><para style="HCenter">DATE</para></td>
                     <td><para style="HCenter">REF. NO.</para></td>
@@ -69,20 +103,50 @@
                     <td><para style="RightHeader">PAYMENTS</para></td>
                     <td><para style="RightHeader">BALANCE</para></td>
                 </tr>
+            </blockTable>
+
+            <spacer length="5mm" />
+
+            <blockTable rowHeights="100mm" style="Container">
                 <tr>
-                    [[repeatIn(page['lines'], 'line')]]
-                    <td><para>[[ line['date'] ]]</para></td>
-                    <td><para>[[ line['ref'] ]]</para></td>
-                    <td><para>[[ line['description'] ]]</para></td>
-                    <td><para style="AmountRight">[[ line['charges'] ]]</para></td>
-                    <td><para style="AmountRight">[[ line['payments'] ]]</para></td>
-                    <td><para style="AmountRight">[[ line['balance'] ]]</para></td>
+                    <td>
+                        <blockTable colWidths="18mm,20mm,73mm,25mm,25mm,25mm" style="Lines">
+                            <tr>
+                                [[repeatIn(page['lines'], 'line')]]
+                                <td><para style="NormalLeft">[[ line['date'] ]]</para></td>
+                                <td><para style="NormalLeft">[[ line['ref'] ]]</para></td>
+                                <td><para style="NormalLeft">[[ line['description'] ]]</para></td>
+                                <td><para style="NormalRight">
+                                    [[ formatLang(line['charges'], currency_obj=company.currency_id) ]]
+                                </para></td>
+                                <td><para style="NormalRight">
+                                    [[ line['payments'] and formatLang(line['payments'], currency_obj=company.currency_id) or removeParentNode('para') ]]
+                                </para></td>
+                                <td><para style="NormalRight">
+                                    [[ formatLang(line['balance'], currency_obj=company.currency_id) ]]
+                                </para></td>
+                            </tr>
+                        </blockTable>
+                    </td>
                 </tr>
             </blockTable>
 
-            <spacer length="20mm" />
+            <spacer length="5mm" />
 
-            <blockTable colWidths="39.2mm,39.2mm,39.2mm,39.2mm,39.2mm">
+            <blockTable colWidths="18mm,20mm,73mm,25mm,25mm,25mm" style="Lines" rowHeights="5mm">
+                <tr>
+                    <td><para>[[ get_today_date() ]]</para></td>
+                    <td><para>[[ line['ref'] ]]</para></td>
+                    <td><para>[[ line['description'] ]]</para></td>
+                    <td><para style="NormalRight">[[ formatLang(line['charges'], currency_obj=company.currency_id) ]]</para></td>
+                    <td><para style="NormalRight">[[ formatLang(line['payments'], currency_obj=company.currency_id) ]]</para></td>
+                    <td><para style="NormalRight">[[ formatLang(line['balance'], currency_obj=company.currency_id) ]]</para></td>
+                </tr>
+            </blockTable>
+
+            <spacer length="10mm" />
+
+            <blockTable colWidths="37.2mm,37.2mm,37.2mm,37.2mm,37.2mm" style="Lines">
                 <tr>
                     <td><para style="HCenter">CURRENT</para></td>
                     <td><para style="HCenter">Nov</para></td>

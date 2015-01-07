@@ -22,6 +22,7 @@
 from openerp.report import report_sxw
 from account.report.account_partner_ledger import third_party_ledger
 
+from datetime import date
 import base64
 from reportlab.platypus.flowables import Image
 from reportlab.lib.utils import simpleSplit 
@@ -98,6 +99,30 @@ def PageIterator(obj):
 
         state.previous = current
 
+def format_date(date):
+    """
+    Format a date or datetime object to the day-month-year
+    format with two digits.
+
+    >> format_date(date(2015, 1, 7))
+    "07-01-15"
+    >> format_date(date(2020, 4, 10))
+    "10-04-20"
+    """
+    return date.strftime("%d-%m-%y")
+
+def get_today_date():
+    """
+    Get current date formatted to string.
+    """
+    return format_date(date.today())
+
+def get_image():
+    file = open("/usr/share/icons/hicolor/64x64/apps/skype.png")
+    return base64.encodestring(file.read())
+
+def get_pages(obj, count):
+    return PageIterator(count)
 
 class account_partner_ledger(third_party_ledger):
     def __init__(self, cr, uid, name, context=None):
@@ -106,16 +131,11 @@ class account_partner_ledger(third_party_ledger):
 
         self.localcontext.update({
             "range": range,
-            "get_pages": self._get_pages,
-            "get_image": self._get_image,
+            "get_pages": get_pages,
+            "get_image": get_image,
+            "format_date": format_date,
+            "get_today_date": get_today_date,
         })
-
-    def _get_image(self):
-        file = open("/usr/share/icons/hicolor/64x64/apps/skype.png")
-        return base64.encodestring(file.read())
-
-    def _get_pages(self, obj):
-        return PageIterator(obj)
 
 report_sxw.report_sxw(
     'report.account_partner_ledger.account_partner_ledger',
