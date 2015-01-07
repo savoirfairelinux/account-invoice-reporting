@@ -22,6 +22,10 @@
 from openerp.report import report_sxw
 from account.report.account_partner_ledger import third_party_ledger
 
+import base64
+from reportlab.platypus.flowables import Image
+from reportlab.lib.utils import simpleSplit 
+
 
 class State(object):
     def __init__(self, obj):
@@ -30,8 +34,9 @@ class State(object):
         self.iterator = iter(self.lines)
         self.address = "Some address"
 
-def iter_current_lines(self, container, iterable, max_step):
-    balance = 0
+
+def iter_current_lines(state, container, iterable, max_step):
+    balance = state.previous['total'] if state.previous else 0
 
     for i in range(max_step):
         try:
@@ -55,6 +60,7 @@ def iter_current_lines(self, container, iterable, max_step):
         except StopIteration:
             container["not_last"] = False
             break
+
 
 def PageIterator(obj):
     state = State(obj)
@@ -101,7 +107,12 @@ class account_partner_ledger(third_party_ledger):
         self.localcontext.update({
             "range": range,
             "get_pages": self._get_pages,
+            "get_image": self._get_image,
         })
+
+    def _get_image(self):
+        file = open("/usr/share/icons/hicolor/64x64/apps/skype.png")
+        return base64.encodestring(file.read())
 
     def _get_pages(self, obj):
         return PageIterator(obj)

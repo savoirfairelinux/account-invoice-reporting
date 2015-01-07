@@ -32,6 +32,13 @@
         <section>
             [[repeatIn(get_pages(3), 'page')]]
 
+            <section>
+                <para>
+                    [[ get_image() and setTag('para','image') or removeParentNode('para') ]]
+                    [[ get_image() ]]
+                </para>
+            </section>
+
             <para style="Statement">STATEMENT</para>
 
             <blockTable colWidths="196mm" rowHeights="30mm">
