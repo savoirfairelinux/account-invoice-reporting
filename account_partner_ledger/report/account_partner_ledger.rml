@@ -41,7 +41,7 @@
 
         <blockTableStyle id="Lines"> 
             <blockValign value="TOP" start="0,0" stop="-1,-1" />
-            <blockBackground colorName="0xD0D0D0" start="0,0" stop="-1,-1"/>
+            <!-- <blockBackground colorName="0xD0D0D0" start="0,0" stop="-1,-1"/> -->
             <blockLeftPadding   length="0.5mm" start="0,0" stop="-1,-1" />
             <blockRightPadding  length="0.5mm" start="0,0" stop="-1,-1" />
             <blockTopPadding    length="0.5mm" start="0,0" stop="-1,-1" />
