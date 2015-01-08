@@ -19,13 +19,13 @@
 
         <images/>
 
-        <paraStyle name="NormalRight" fontName="Helvetica" fontSize="3.5mm" alignment="RIGHT" leading="4mm" />
-        <paraStyle name="NormalLeft"  fontName="Helvetica" fontSize="3.5mm" alignment="LEFT"  leading="4mm" />
+        <paraStyle name="NormalRight" fontName="Helvetica" fontSize="3mm" alignment="RIGHT" leading="4mm" />
+        <paraStyle name="NormalLeft"  fontName="Helvetica" fontSize="3mm" alignment="LEFT"  leading="4mm" />
 
         <paraStyle name="ImageLeft"   fontName="Helvetica" fontSize="3.5mm" alignment="LEFT"  leading="4mm" />
 
-        <paraStyle name="HCenter"     fontName="Helvetica" fontSize="4mm"   alignment="CENTER" leading="5mm" />
-        <paraStyle name="RightHeader" fontName="Helvetica" fontSize="4mm"   alignment="RIGHT"  leading="5mm" />
+        <paraStyle name="HCenter"     fontName="Helvetica" fontSize="3.7mm"   alignment="CENTER" leading="4mm" />
+        <paraStyle name="RightHeader" fontName="Helvetica" fontSize="3.7mm"   alignment="RIGHT"  leading="4mm" />
 
         <paraStyle name="Statement"   fontName="Helvetica" fontSize="7mm"   alignment="RIGHT"  leading="10mm" />
 
@@ -54,13 +54,13 @@
         [[repeatIn(objects, 'partner')]]
 
         <section>
-            [[repeatIn(get_pages(partner, lines(partner)), 'page')]]
+            [[repeatIn(get_pages(partner, lines(partner), 73, 100, 3), 'page')]]
             [[setLang(partner.lang)]]
 
             <blockTable colWidths="186mm" rowHeights="20mm">
                 <tr>
                     <td>
-                        <image>[[ get_image() ]]</image>
+                        <image>[[ company.logo ]]</image>
                     </td>
                 </tr>
             </blockTable>
@@ -78,7 +78,10 @@
 
             <blockTable colWidths="186mm" rowHeights="20mm" style="Lines">
                 <tr>
-                    <td>[[ display_address(partner) ]]</td>
+                    <td>
+                        <para>[[ partner.name ]]</para>
+                        <para>[[ display_address(partner) ]]</para>
+                    </td>
                 </tr>
             </blockTable>
 
@@ -97,7 +100,7 @@
 
             <spacer length="5mm" />
 
-            <blockTable colWidths="18mm,20mm,73mm,25mm,25mm,25mm" style="Lines">
+            <blockTable colWidths="18mm,28mm,65mm,25mm,25mm,25mm" style="Lines">
                 <tr>
                     <td><para style="HCenter">DATE</para></td>
                     <td><para style="HCenter">REF. NO.</para></td>
@@ -113,10 +116,10 @@
             <blockTable rowHeights="100mm" style="Container">
                 <tr>
                     <td>
-                        <blockTable colWidths="18mm,20mm,73mm,25mm,25mm,25mm" style="Lines">
+                        <blockTable colWidths="18mm,28mm,65mm,25mm,25mm,25mm" style="Lines">
                             <tr>
                                 [[repeatIn(page['lines'], 'line')]]
-                                <td><para style="NormalLeft">[[ line['date'] ]]</para></td>
+                                <td><para style="NormalLeft">[[ format_date(line['date']) ]]</para></td>
                                 <td><para style="NormalLeft">[[ line['ref'] ]]</para></td>
                                 <td><para style="NormalLeft">[[ line['description'] ]]</para></td>
                                 <td><para style="NormalRight">
@@ -136,7 +139,7 @@
 
             <spacer length="5mm" />
 
-            <blockTable colWidths="18mm,20mm,73mm,25mm,25mm,25mm" style="Lines" rowHeights="5mm">
+            <blockTable colWidths="18mm,28mm,65mm,25mm,25mm,25mm" style="Lines" rowHeights="5mm">
                 <tr>
                     [[ page['not_last'] or removeParentNode('blockTable')]]
                     <td><para style="NormalLeft">[[ get_today_date() ]]</para></td>

@@ -22,20 +22,25 @@
 from openerp.report import report_sxw
 from account.report.account_partner_ledger import third_party_ledger
 
-from datetime import date
-import base64
+from datetime import datetime, date
+
 from reportlab.platypus.flowables import Image
 from reportlab.lib.utils import simpleSplit 
 from reportlab.lib.units import mm
 
 
 class State(object):
-    def __init__(self, obj, lines):
-        #import pdb; pdb.set_trace()
+    def __init__(self, obj, lines, max_width, max_height, font_size=3.5, line_height=5, font_name="Helvetica"):
         self.previous = None
         self.lines = lines
         self.iterator = iter(self.lines)
-        self.address = "Some address"
+
+        # Control container filling
+        self.max_width = max_width
+        self.font_name = font_name
+        self.font_size = font_size
+        self.line_height = line_height
+        self.max_height = max_height
 
 def getTextHeight(text, fontName, fontSize, maxWidth, lineHeight):
     """
@@ -61,22 +66,18 @@ def iter_current_lines(state, container, iterable, max_step):
     balance = state.previous['total'] if state.previous else 0
 
     height = 0
-    max_width = 73
 
-    line_height = 5
-    max_height = 100
+    line_width = (state.max_width - 10) * mm
+    font_size = state.font_size * mm
 
-    line_width = (max_width - 10) * mm
-    font_size = 3.5 * mm
-
-    while height < max_height:
+    while height < state.max_height:
         try:
             value = next(iterable)
             credit = value['credit']
             debit = value['debit']
             ref = value['ref'] or value['a_code']
             description = value['name'] or value['a_name']
-            move_date = value['date']
+            move_date = datetime.strptime(value['date'], "%Y-%m-%d")
 
             #from random import randrange
             #description = "a"
@@ -85,10 +86,10 @@ def iter_current_lines(state, container, iterable, max_step):
             #description += "abcdef a dfdf" * randrange(1, 4)
 
             height += getTextHeight(description,
-                                    "Helvetica",
+                                    state.font_name,
                                     font_size,
                                     line_width,
-                                    line_height)
+                                    state.line_height)
 
             balance += value['progress']
 
@@ -109,14 +110,15 @@ def iter_current_lines(state, container, iterable, max_step):
             break
 
 
-def PageIterator(partner, lines):
+def PageIterator(partner, lines, max_width, max_height, font_size):
     """
     Split a set of lines on multiple pages. It use the
     line_iterator to iterate over lines that fit within
     a defined height.
     """
 
-    state = State(partner, lines)
+
+    state = State(partner, lines, max_width, max_height, font_size)
     counter = 1
 
     while True:
@@ -130,7 +132,6 @@ def PageIterator(partner, lines):
             "index": counter,
             "period_start": "01-10-13",
             "period_end": "19-23-14",
-            "address": state.address,
             "previous": last_total,
             "total": last_total,
             "not_last": True,
@@ -170,16 +171,8 @@ def get_today_date():
     """
     return format_date(date.today())
 
-def get_image():
-    """
-    Returns an image as base64 that can be used inside rml
-    templates.
-    """
-    file = open("/usr/share/icons/hicolor/64x64/apps/skype.png")
-    return base64.encodestring(file.read())
-
-def get_pages(partner, lines):
-    return PageIterator(partner, lines)
+def get_pages(partner, lines, max_width, max_height, font_size):
+    return PageIterator(partner, lines, max_width, max_height, font_size)
 
 class account_partner_ledger(third_party_ledger):
     def __init__(self, cr, uid, name, context=None):
@@ -189,7 +182,6 @@ class account_partner_ledger(third_party_ledger):
         self.localcontext.update({
             "range": range,
             "get_pages": get_pages,
-            "get_image": get_image,
             "format_date": format_date,
             "get_today_date": get_today_date,
         })
