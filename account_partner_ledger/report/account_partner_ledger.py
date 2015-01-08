@@ -31,7 +31,7 @@ from reportlab.lib.units import mm
 
 class State(object):
     def __init__(self, obj, lines):
-        import pdb; pdb.set_trace()
+        #import pdb; pdb.set_trace()
         self.previous = None
         self.lines = lines
         self.iterator = iter(self.lines)
@@ -72,15 +72,17 @@ def iter_current_lines(state, container, iterable, max_step):
     while height < max_height:
         try:
             value = next(iterable)
-            credit = value if int(height) % 2 == 0 else 0
-            debit = value if int(height+1) % 2 == 0 else 0
+            credit = value['credit']
+            debit = value['debit']
+            ref = value['ref'] or value['a_code']
+            description = value['name'] or value['a_name']
+            move_date = value['date']
 
-            from random import randrange
-
+            #from random import randrange
             #description = "a"
             #description = " ".join([str(a) for a in range(10)]) * 4
-            description = "Abcdef (ABC) abcd" * randrange(1, 3)
-            description += "abcdef a dfdf" * randrange(1, 4)
+            #description = "Abcdef (ABC) abcd" * randrange(1, 3)
+            #description += "abcdef a dfdf" * randrange(1, 4)
 
             height += getTextHeight(description,
                                     "Helvetica",
@@ -88,13 +90,13 @@ def iter_current_lines(state, container, iterable, max_step):
                                     line_width,
                                     line_height)
 
-            balance += debit - credit
+            balance += value['progress']
 
             val = {
                 "payments": credit,
                 "charges": debit,
-                "date": "10-17-12",
-                "ref": "00011336",
+                "date": move_date,
+                "ref": ref,
                 "description": description,
                 "balance": balance
             }
