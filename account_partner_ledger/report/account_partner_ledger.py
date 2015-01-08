@@ -30,9 +30,10 @@ from reportlab.lib.units import mm
 
 
 class State(object):
-    def __init__(self, obj):
+    def __init__(self, obj, lines):
+        import pdb; pdb.set_trace()
         self.previous = None
-        self.lines = [i for i in range(25)]
+        self.lines = lines
         self.iterator = iter(self.lines)
         self.address = "Some address"
 
@@ -106,17 +107,18 @@ def iter_current_lines(state, container, iterable, max_step):
             break
 
 
-def PageIterator(obj):
+def PageIterator(partner, lines):
     """
     Split a set of lines on multiple pages. It use the
     line_iterator to iterate over lines that fit within
     a defined height.
     """
 
-    state = State(obj)
+    state = State(partner, lines)
     counter = 1
 
     while True:
+
         if not state.previous:
             last_total = 1
         else:
@@ -174,8 +176,8 @@ def get_image():
     file = open("/usr/share/icons/hicolor/64x64/apps/skype.png")
     return base64.encodestring(file.read())
 
-def get_pages(obj, count):
-    return PageIterator(count)
+def get_pages(partner, lines):
+    return PageIterator(partner, lines)
 
 class account_partner_ledger(third_party_ledger):
     def __init__(self, cr, uid, name, context=None):

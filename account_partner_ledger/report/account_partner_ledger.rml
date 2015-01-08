@@ -50,9 +50,12 @@
     </stylesheet>
 
     <story>
+    <section>
+        [[repeatIn(objects, 'partner')]]
 
         <section>
-            [[repeatIn(get_pages(objects, 3), 'page')]]
+            [[repeatIn(get_pages(partner, lines(partner)), 'page')]]
+            [[setLang(partner.lang)]]
 
             <blockTable colWidths="186mm" rowHeights="20mm">
                 <tr>
@@ -75,7 +78,7 @@
 
             <blockTable colWidths="186mm" rowHeights="20mm" style="Lines">
                 <tr>
-                    <td>[[ page['address'] ]]</td>
+                    <td>[[ display_address(partner) ]]</td>
                 </tr>
             </blockTable>
 
@@ -135,6 +138,7 @@
 
             <blockTable colWidths="18mm,20mm,73mm,25mm,25mm,25mm" style="Lines" rowHeights="5mm">
                 <tr>
+                    [[ page['not_last'] or removeParentNode('blockTable')]]
                     <td><para style="NormalLeft">[[ get_today_date() ]]</para></td>
                     <td><para style="NormalLeft">[[ line['ref'] ]]</para></td>
                     <td><para style="NormalLeft">[[ line['description'] ]]</para></td>
@@ -142,9 +146,17 @@
                     <td><para style="NormalRight">[[ formatLang(line['payments'], currency_obj=company.currency_id) ]]</para></td>
                     <td><para style="NormalRight">[[ formatLang(line['balance'], currency_obj=company.currency_id) ]]</para></td>
                 </tr>
+                <tr>
+                    [[ (not page['not_last']) or removeParentNode('blockTable')]]
+                    <td><para style="NormalLeft"></para></td>
+                    <td><para style="NormalLeft"></para></td>
+                    <td><para style="NormalLeft"></para></td>
+                    <td><para style="NormalLeft"></para></td>
+                    <td><para style="NormalLeft"></para></td>
+                </tr>
             </blockTable>
 
-            <spacer length="10mm" />
+            <spacer length="5mm" />
 
             <blockTable colWidths="37.2mm,37.2mm,37.2mm,37.2mm,37.2mm" style="Lines">
                 <tr>
@@ -169,5 +181,6 @@
 
         </section>
 
+    </section>
     </story>
 </document>
