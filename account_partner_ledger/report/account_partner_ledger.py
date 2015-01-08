@@ -22,7 +22,7 @@
 from openerp.report import report_sxw
 from account.report.account_partner_ledger import third_party_ledger
 
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 from reportlab.platypus.flowables import Image
 from reportlab.lib.utils import simpleSplit 
@@ -41,6 +41,28 @@ class State(object):
         self.font_size = font_size
         self.line_height = line_height
         self.max_height = max_height
+
+        self.periods = []
+
+        today = datetime.now()
+        month = timedelta(days=30)
+
+        self.periods.append({
+            "label": "CURRENT",
+            "value": 0
+        })
+        self.periods.append({
+            "label": (today - month).strftime("%b"),
+            "value": 0
+        })
+        self.periods.append({
+            "label": (today - month - month).strftime("%b"),
+            "value": 0
+        })
+        self.periods.append({
+            "label": "Pre-%s" % ((today - month - month).strftime("%b")),
+            "value": 0
+        })
 
 def getTextHeight(text, fontName, fontSize, maxWidth, lineHeight):
     """
@@ -135,7 +157,8 @@ def PageIterator(partner, lines, max_width, max_height, font_size):
             "previous": last_total,
             "total": last_total,
             "not_last": True,
-            "lines": []
+            "lines": [],
+            "periods": state.periods,
         }
 
         counter += 1
