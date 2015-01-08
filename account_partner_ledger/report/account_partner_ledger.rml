@@ -22,14 +22,16 @@
         <paraStyle name="NormalRight" fontName="Helvetica" fontSize="3.5mm" alignment="RIGHT" leading="4mm" />
         <paraStyle name="NormalLeft"  fontName="Helvetica" fontSize="3.5mm" alignment="LEFT"  leading="4mm" />
 
-        <paraStyle name="HCenter"     fontName="Helvetica" fontSize="4mm" alignment="CENTER" leading="5mm" />
-        <paraStyle name="RightHeader" fontName="Helvetica" fontSize="4mm" alignment="RIGHT"  leading="5mm" />
+        <paraStyle name="ImageLeft"   fontName="Helvetica" fontSize="3.5mm" alignment="LEFT"  leading="4mm" />
 
-        <paraStyle name="Statement"   fontName="Helvetica" fontSize="7mm" alignment="RIGHT"  leading="10mm" />
+        <paraStyle name="HCenter"     fontName="Helvetica" fontSize="4mm"   alignment="CENTER" leading="5mm" />
+        <paraStyle name="RightHeader" fontName="Helvetica" fontSize="4mm"   alignment="RIGHT"  leading="5mm" />
+
+        <paraStyle name="Statement"   fontName="Helvetica" fontSize="7mm"   alignment="RIGHT"  leading="10mm" />
 
         <blockTableStyle id="Container"> 
             <blockValign value="TOP" start="0,0" stop="-1,-1" />
-            <blockBackground colorName="0x0DFF00" start="0,0" stop="-1,-1"/>
+            <!-- <blockBackground colorName="0x0DFF00" start="0,0" stop="-1,-1"/> -->
             <blockLeftPadding   length="0mm" start="0,0" stop="-1,-1" />
             <blockRightPadding  length="0mm" start="0,0" stop="-1,-1" />
             <blockTopPadding    length="0mm" start="0,0" stop="-1,-1" />
@@ -52,12 +54,13 @@
         <section>
             [[repeatIn(get_pages(objects, 3), 'page')]]
 
-            <section>
-                <para>
-                    [[ get_image() and setTag('para','image') or removeParentNode('para') ]]
-                    [[ get_image() ]]
-                </para>
-            </section>
+            <blockTable colWidths="186mm" rowHeights="20mm">
+                <tr>
+                    <td>
+                        <image>[[ get_image() ]]</image>
+                    </td>
+                </tr>
+            </blockTable>
 
             <para style="Statement">STATEMENT</para>
 
