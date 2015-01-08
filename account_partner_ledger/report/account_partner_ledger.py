@@ -26,6 +26,7 @@ from datetime import date
 import base64
 from reportlab.platypus.flowables import Image
 from reportlab.lib.utils import simpleSplit 
+from reportlab.lib.units import mm
 
 
 class State(object):
@@ -35,15 +36,56 @@ class State(object):
         self.iterator = iter(self.lines)
         self.address = "Some address"
 
+def getTextHeight(text, fontName, fontSize, maxWidth, lineHeight):
+    """
+    Returns the height of a text that should be splitted on 
+    multiple lines. It can be used to measure the height of a 
+    cell in a table.
+    """
+    lines = simpleSplit(text, fontName, fontSize, maxWidth)
+    return len(lines) * lineHeight
 
 def iter_current_lines(state, container, iterable, max_step):
+    """
+    Iters over the quantity of lines that fit within the
+    table for one page.
+
+    When there is not enough space, it will raise a StopIteration
+    error to communicate that it should stop getting lines for
+    the current page.
+
+    The iterable will be used as long as there are lines. This make
+    it possible to split the lines over multiple pages.
+    """
     balance = state.previous['total'] if state.previous else 0
 
-    for i in range(max_step):
+    height = 0
+    max_width = 73
+
+    line_height = 5
+    max_height = 100
+
+    line_width = (max_width - 10) * mm
+    font_size = 3.5 * mm
+
+    while height < max_height:
         try:
             value = next(iterable)
-            credit = value if i % 2 == 0 else 0
-            debit = value if (i+1) % 2 == 0 else 0
+            credit = value if int(height) % 2 == 0 else 0
+            debit = value if int(height+1) % 2 == 0 else 0
+
+            from random import randrange
+
+            #description = "a"
+            #description = " ".join([str(a) for a in range(10)]) * 4
+            description = "Abcdef (ABC) abcd" * randrange(1, 3)
+            description += "abcdef a dfdf" * randrange(1, 4)
+
+            height += getTextHeight(description,
+                                    "Helvetica",
+                                    font_size,
+                                    line_width,
+                                    line_height)
 
             balance += debit - credit
 
@@ -52,18 +94,25 @@ def iter_current_lines(state, container, iterable, max_step):
                 "charges": debit,
                 "date": "10-17-12",
                 "ref": "00011336",
-                "description": "Abcdef (ABC) abcdef abcdefg df Traghpert fg",
+                "description": description,
                 "balance": balance
             }
 
-            container["total"] += balance
+            container["total"] = balance
             container["lines"].append(val)
+
         except StopIteration:
             container["not_last"] = False
             break
 
 
 def PageIterator(obj):
+    """
+    Split a set of lines on multiple pages. It use the
+    line_iterator to iterate over lines that fit within
+    a defined height.
+    """
+
     state = State(obj)
     counter = 1
 
@@ -118,6 +167,10 @@ def get_today_date():
     return format_date(date.today())
 
 def get_image():
+    """
+    Returns an image as base64 that can be used inside rml
+    templates.
+    """
     file = open("/usr/share/icons/hicolor/64x64/apps/skype.png")
     return base64.encodestring(file.read())
 

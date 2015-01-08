@@ -19,20 +19,17 @@
 
         <images/>
 
-        <paraStyle name="base" fontName="Helvetica" fontSize="8" />
+        <paraStyle name="NormalRight" fontName="Helvetica" fontSize="3.5mm" alignment="RIGHT" leading="4mm" />
+        <paraStyle name="NormalLeft"  fontName="Helvetica" fontSize="3.5mm" alignment="LEFT"  leading="4mm" />
 
-        <paraStyle name="NormalRight" parent="base" alignment="RIGHT"/>
-        <paraStyle name="NormalLeft" parent="base" alignment="LEFT"/>
+        <paraStyle name="HCenter"     fontName="Helvetica" fontSize="4mm" alignment="CENTER" leading="5mm" />
+        <paraStyle name="RightHeader" fontName="Helvetica" fontSize="4mm" alignment="RIGHT"  leading="5mm" />
 
-        <paraStyle name="baseBig" parent="base" fontSize="12" />
-
-        <paraStyle name="HCenter" parent="baseBig" alignment="CENTER" />
-        <paraStyle name="RightHeader" parent="baseBig" alignment="RIGHT" />
-        <paraStyle name="Statement" parent="baseBig" alignment="RIGHT" fontSize="14"/>
+        <paraStyle name="Statement"   fontName="Helvetica" fontSize="7mm" alignment="RIGHT"  leading="10mm" />
 
         <blockTableStyle id="Container"> 
             <blockValign value="TOP" start="0,0" stop="-1,-1" />
-            <blockBackground colorName="0x00FF00" start="0,0" stop="-1,-1"/>
+            <blockBackground colorName="0x0DFF00" start="0,0" stop="-1,-1"/>
             <blockLeftPadding   length="0mm" start="0,0" stop="-1,-1" />
             <blockRightPadding  length="0mm" start="0,0" stop="-1,-1" />
             <blockTopPadding    length="0mm" start="0,0" stop="-1,-1" />
@@ -117,13 +114,13 @@
                                 <td><para style="NormalLeft">[[ line['ref'] ]]</para></td>
                                 <td><para style="NormalLeft">[[ line['description'] ]]</para></td>
                                 <td><para style="NormalRight">
-                                    [[ formatLang(line['charges'], currency_obj=company.currency_id) ]]
+                                    [[ line['charges'] and formatLang(line['charges'], currency_obj=company.currency_id) ]]
                                 </para></td>
                                 <td><para style="NormalRight">
-                                    [[ line['payments'] and formatLang(line['payments'], currency_obj=company.currency_id) or removeParentNode('para') ]]
+                                    [[ line['payments'] and formatLang(line['payments'], currency_obj=company.currency_id) ]]
                                 </para></td>
                                 <td><para style="NormalRight">
-                                    [[ formatLang(line['balance'], currency_obj=company.currency_id) ]]
+                                    [[ line['balance'] and formatLang(line['balance'], currency_obj=company.currency_id) ]]
                                 </para></td>
                             </tr>
                         </blockTable>
@@ -135,9 +132,9 @@
 
             <blockTable colWidths="18mm,20mm,73mm,25mm,25mm,25mm" style="Lines" rowHeights="5mm">
                 <tr>
-                    <td><para>[[ get_today_date() ]]</para></td>
-                    <td><para>[[ line['ref'] ]]</para></td>
-                    <td><para>[[ line['description'] ]]</para></td>
+                    <td><para style="NormalLeft">[[ get_today_date() ]]</para></td>
+                    <td><para style="NormalLeft">[[ line['ref'] ]]</para></td>
+                    <td><para style="NormalLeft">[[ line['description'] ]]</para></td>
                     <td><para style="NormalRight">[[ formatLang(line['charges'], currency_obj=company.currency_id) ]]</para></td>
                     <td><para style="NormalRight">[[ formatLang(line['payments'], currency_obj=company.currency_id) ]]</para></td>
                     <td><para style="NormalRight">[[ formatLang(line['balance'], currency_obj=company.currency_id) ]]</para></td>
