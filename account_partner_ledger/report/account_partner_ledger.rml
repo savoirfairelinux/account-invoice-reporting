@@ -92,10 +92,10 @@
                 <tr>
                     <td>Page [[ page['index'] ]]</td>
                     <!-- <td>Activity From: [[ page['period_start'] ]]</td> -->
-                    <td>Activity From: [[ get_start_period(data) ]]</td> -->
+                    <td>Activity From: [[ get_start(data) ]]</td>
                     <!-- <td>To: [[ page['period_end'] ]]</td> -->
-                    <td>To: [[ get_end_period(data) ]]</td>
-                    <td>Balance Forward: [[ page['previous'] ]]</td>
+                    <td>To: [[ get_end(data) ]]</td>
+                    <td>Balance Forward: [[ formatLang(page['previous'], currency_obj=company.currency_id) ]]</td>
                 </tr>
             </blockTable>
 
@@ -146,7 +146,7 @@
                     <td><para style="NormalLeft">[[ get_today_date() ]]</para></td>
                     <td><para style="NormalLeft"></para></td>
                     <td><para style="NormalLeft">Finance Charge</para></td>
-                    <td><para style="NormalRight">[[ formatLanga(0, currency_obj=company.currency_id) ]]</para></td>
+                    <td><para style="NormalRight">[[ formatLang(0, currency_obj=company.currency_id) ]]</para></td>
                     <td><para style="NormalRight"></para></td>
                     <td><para style="NormalRight">[[ formatLang(page['total'], currency_obj=company.currency_id) ]]</para></td>
                 </tr>
