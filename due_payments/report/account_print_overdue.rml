@@ -128,16 +128,22 @@
         </td>
       </tr>
     </blockTable>
+
     <spacer length="20" />
+
     <para style="account_big_center">État de compte client / Customer account Statement</para>
+
     <spacer length="20" />
+
     <para style="terp_default_9">Date: [[ formatLang(time.strftime('%Y-%m-%d'),date=True) ]]</para>
     <para style="terp_default_9">Condition de paiement / Payment terms: Net 30 jours / Net 30 days</para>
     <para style="terp_default_9">Devise / Currency : CAD (ou USD)</para>
+
     <spacer length="20" />
+
     <section>
       <para style="terp_default_8">[[ not getLines(o) and removeParentNode('section')]]</para>
-      <blockTable colWidth="71,71,56,56,66" style="Table1">
+      <blockTable colWidth="103,107,103,103,103" style="Table1">
       <tr>
         <td>
           <para style="terp_tblheader_Details">Date</para>
@@ -157,7 +163,7 @@
       </tr>
       </blockTable>
       <section>[[repeatIn(getLines(o), 'line') ]]
-      <blockTable colWidth="71,71,56,56,66" style="Table3">
+      <blockTable colWidth="103,107,103,103,103" style="Table3">
         <tr>
           <td>
             <para style="terp_default_9">[[ formatLang(line['date'],date=True) ]]</para>
@@ -177,7 +183,10 @@
         </tr>
       </blockTable>
       </section>
-      <blockTable colWidths="244.0,88.0,56.0,56.0,66.0" style="Table2">
+
+      <spacer length="20" />
+
+      <blockTable colWidths="244.0,88.0,58.0,58.0,72.0" style="Table2">
       <tr>
         <td>
           <para style="terp_default_8">
@@ -198,7 +207,7 @@
         </td>
       </tr>
       </blockTable>
-      <blockTable colWidths="244.0,88.0,177.0" style="Table4">
+      <blockTable colWidths="244.0,88.0,187.0" style="Table4">
       <tr>
         <td>
           <para style="terp_default_8">
@@ -221,18 +230,12 @@
       </para>
       <para style="terp_default_9">Montant total dû / Total amount owed: [[ formatLang((reduce(lambda x, y: x + (y['debit'] - y['credit']), getLines(o), 0)), currency_obj=company.currency_id) ]]</para>
     </section>
-    <para style="terp_default_9">
-      <font color="white"> </font>
-    </para>
+
+    <spacer length="20" />
+
     <section>
        <para style="terp_default_Bold_9">[[ getLines(o) and removeParentNode('section')]]There is nothing due with this customer.</para>
     </section>
-    <para style="terp_default_9">
-      <font color="white"> </font>
-    </para>
-    <para style="terp_default_8">
-      <font color="white"> </font>
-    </para>
   </pto>
   </story>
 </document>
