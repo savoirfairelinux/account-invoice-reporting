@@ -129,11 +129,11 @@
       </tr>
     </blockTable>
 
-    <spacer length="16" />
+    <spacer length="30" />
 
     <para style="account_big_center">État de compte client / Customer account Statement</para>
 
-    <spacer length="16" />
+    <spacer length="30" />
 
     <para style="terp_default_9">Date: [[ formatLang(time.strftime('%Y-%m-%d'),date=True) ]]</para>
     <para style="terp_default_9">Condition de paiement / Payment terms: Net 30 jours / Net 30 days</para>
@@ -142,7 +142,7 @@
 
     <para style="terp_default_9">Devise / Currency : CAD (ou USD)</para>
 
-    <spacer length="16" />
+    <spacer length="8" />
 
     <section>
       <para style="terp_default_8">[[ not getLines(o) and removeParentNode('section')]]</para>
@@ -152,16 +152,30 @@
           <para style="terp_tblheader_Details">Date</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Centre">Numéro de facture / Invoice Number</para>
+            <xpre style="terp_tblheader_Details_Centre">
+Numéro de
+facture /
+Invoice
+Number
+            </xpre>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Montant à payé / Amount due</para>
+            <xpre style="terp_tblheader_Details_Right">
+Montant à payé /
+Amount version
+            </xpre>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Payé / Paid</para>
+            <xpre style="terp_tblheader_Details_Right">
+Payé /
+Paid
+            </xpre>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Solde / Balance</para>
+            <xpre style="terp_tblheader_Details_Right">
+Solde /
+Balance
+            </xpre>
         </td>
       </tr>
       </blockTable>
@@ -221,7 +235,9 @@
           <para style="terp_default_Bold_9">Solde / Balance:</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">[[ formatLang((reduce(lambda x, y: x +(y['debit'] - y['credit']), getLines(o), 0)), currency_obj = company.currency_id) ]]</para>
+            <para style="terp_tblheader_Details_Right">
+                [[ formatLang((reduce(lambda x, y: x +(y['debit'] - y['credit']), getLines(o), 0)), currency_obj = company.currency_id) ]]
+            </para>
         </td>
       </tr>
       </blockTable>
