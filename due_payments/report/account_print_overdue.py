@@ -8,8 +8,12 @@ class OverdueReport(Overdue):
         self.localcontext.update({
             'getLines': self._lines_get,
         })
+        self.lines = None
 
     def _lines_get(self, partner):
+        if self.lines:
+            return self.lines
+
         base_class = super(OverdueReport, self)
         moveLines = base_class._lines_get(partner)
 
@@ -31,6 +35,8 @@ class OverdueReport(Overdue):
             }
 
             lines.append(current)
+
+        self.lines = lines
 
         return lines
 
