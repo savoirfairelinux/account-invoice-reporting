@@ -2,13 +2,13 @@
 <openerp>
     <data>
 
-        <report
-            auto="False"
-            id="account_overdue2"
-            model="res.partner"
-            name="account.overdue2"
-            rml="due_payments/report/account_print_overdue.rml"
-            string="Due Payments 2" />
+        <!-- Overwrite existing report change rml and report name -->
+        <record
+            id="account.account_overdue"
+            model="ir.actions.report.xml">
+            <field name="report_rml">due_payments/report/account_print_overdue.rml</field>
+            <field name="report_name">account.overdue2</field>
+        </record> 
 
     </data>
 </openerp>
