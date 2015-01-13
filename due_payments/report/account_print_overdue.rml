@@ -131,8 +131,8 @@
     <para style="terp_default_9">État de compte client / Customer account Statement</para>
     <spacer length="20" />
     <para style="terp_default_9">Date: [[ formatLang(time.strftime('%Y-%m-%d'),date=True) ]]</para>
-    <para style="terp_default_9">État de compte client / Customer account Statement</para>
-    <para style="terp_default_9">État de compte client / Customer account Statement</para>
+    <para style="terp_default_9">Condition de paiement / Payment terms: Net 30 jours / Net 30 days</para>
+    <para style="terp_default_9">Devise / Currency : CAD (ou USD)</para>
     <spacer length="20" />
     <section>
       <para style="terp_default_8">[[ not getLines(o) and removeParentNode('section')]]</para>
