@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report
+            auto="False"
+            id="account_overdue2"
+            model="res.partner"
+            name="account.overdue2"
+            rml="due_payments/report/account_print_overdue.rml"
+            string="Due Payments 2" />
+
+    </data>
+</openerp>

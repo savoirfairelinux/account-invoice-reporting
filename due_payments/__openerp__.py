@@ -13,7 +13,9 @@
 This module overwrites the 'Due_payments' report available on the partner. 
 """,
     'website': 'http://www.savoirfairelinux.com',
-    'data': [],
+    'data': [
+        "account_report.xml",
+    ],
     'demo': [],
     'installable': True,
     'active': False,
