@@ -93,22 +93,36 @@
   <story>
   <pto>
   <pto_header>
-    <blockTable colWidth="71,71,56,56,66" style="Table1">
+    <blockTable colWidth="103,107,103,103,103" style="Table1">
       <tr>
         <td>
           <para style="terp_tblheader_Details">Date</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Centre">Numéro de facture / Invoice Number</para>
+            <xpre style="terp_tblheader_Details_Centre">
+Numéro de
+facture /
+Invoice
+Number
+            </xpre>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Montant à payé / Amount due</para>
+            <xpre style="terp_tblheader_Details_Right">
+Montant à payé /
+Amount version
+            </xpre>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Payé / Paid</para>
+            <xpre style="terp_tblheader_Details_Right">
+Payé /
+Paid
+            </xpre>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Solde / Balance</para>
+            <xpre style="terp_tblheader_Details_Right">
+Solde /
+Balance
+            </xpre>
         </td>
       </tr>
     </blockTable>
